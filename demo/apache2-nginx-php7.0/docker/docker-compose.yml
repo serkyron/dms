@@ -1,0 +1,29 @@
+version: "3"
+services:
+ 
+  demo_php7_web:
+    # replace username/repo:tag with your name and image details
+    image: demo_apache2-nginx-php7.0
+    volumes:
+       - ./demo/www/:/var/www/
+       - ./demo/hosts/sites-enabled-apache/:/etc/apache2/sites-enabled/
+       - ./demo/hosts/sites-enabled-nginx/:/etc/nginx/sites-enabled/
+       - ./demo/apache2-nginx-php7.0/conf/apache2.conf:/etc/apache2/apache2.conf
+       - ./demo/apache2-nginx-php7.0/conf/ports.conf:/etc/apache2/ports.conf
+       - ./demo/apache2-nginx-php7.0/conf/remoteip.conf:/etc/apache2/conf-available/remoteip.conf
+       - ./demo/apache2-nginx-php7.0/conf/php.ini:/etc/php/7.0/apache2/php.ini
+       - ./demo/apache2-nginx-php7.0/conf/nginx.conf:/etc/nginx/nginx.conf
+       - ./demo/apache2-nginx-php7.0/cron/developer-crontab/:/etc/cron.d/developer-crontab
+       - ./demo/apache2-nginx-php7.0/cron/cron.sh:/tmp/cron.sh
+       - ./demo/apache2-nginx-php7.0/cron/cron.log:/tmp/cron.log
+       - ./demo/apache2-nginx-php7.0/conf/postfix.cf:/etc/postfix/main.cf
+       - ./demo/apache2-nginx-php7.0/cron/check_apache.php:/tmp/check_apache.php
+       - ./demo/apache2-nginx-php7.0/cron/check_nginx.php:/tmp/check_nginx.php
+       - ./demo/apache2_envvars:/etc/apache2/envvars
+       - ./demo/apache2-nginx-php7.0/conf/init.d_apache2:/etc/init.d/apache2
+       - ./bin/:/usr/local/bin
+    networks:
+      - demo_webnet
+  
+networks:
+  demo_webnet:

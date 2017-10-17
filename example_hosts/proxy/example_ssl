@@ -1,0 +1,30 @@
+# Virtual Host configuration for example.com
+#
+# You can move that to a different file under sites-available/ and symlink that
+# to sites-enabled/ to enable it.
+#
+
+server {
+	listen                          80;
+	server_name                     example.ru www.example.ru;
+	return 301                      https://$server_name$request_uri;
+}
+
+ server {
+    listen 443;
+    server_name example.ru www.example.ru;
+
+    ssl_certificate           /etc/nginx/certs/example.ru.crt;
+    ssl_certificate_key       /etc/nginx/certs/example.ru.key;
+
+    ssl on;
+    ssl_session_cache  builtin:1000  shared:SSL:10m;
+    ssl_protocols  TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers HIGH:!aNULL:!eNULL:!EXPORT:!CAMELLIA:!DES:!MD5:!PSK:!RC4;
+    ssl_prefer_server_ciphers on;
+
+	location / {
+		proxy_pass http://prod_php7_web;
+	}
+}
+

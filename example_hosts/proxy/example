@@ -1,0 +1,16 @@
+# Virtual Host configuration for example.com
+#
+# You can move that to a different file under sites-available/ and symlink that
+# to sites-enabled/ to enable it.
+#
+
+ server {
+	listen 80;
+
+	server_name example.ru www.example.ru;
+
+	location / {
+		proxy_pass http://demo_php7_web;
+	}
+}
+

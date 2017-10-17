@@ -1,0 +1,20 @@
+version: "3"
+services:
+ 
+  prod_maria_db:
+    image: prod_maria_db
+    command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci]
+    volumes:
+      - ./prod/database/data:/var/lib/mysql
+      - ./prod/database/conf/my.cnf:/etc/mysql/my.cnf
+      - ./prod/database/conf/debian.cnf:/etc/mysql/debian.cnf
+      - ./prod/database/cron/developer-crontab/:/etc/cron.d/developer-crontab
+      - ./prod/database/cron/cron.sh:/tmp/cron.sh
+      - ./prod/database/cron/cron.log:/tmp/cron.log
+    environment:
+      MYSQL_ROOT_PASSWORD: bsb%gW4P4BvlQR#%
+    networks:
+     - prod_webnet
+  
+networks:
+  prod_webnet:

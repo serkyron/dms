@@ -1,0 +1,15 @@
+#!/bin/bash
+chown -R root:root /etc/cron.d
+cron
+crontab /etc/cron.d/developer-crontab
+mysql_install_db --user=mysql --basedir=/usr/ --ldata=/var/lib/mysql/
+service mysql start
+query="GRANT ALL PRIVILEGES ON *.* TO 'debian-sys-maint'@'localhost' IDENTIFIED BY 'siKsMS9eXqxguhPC';"
+query2="GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';"
+query3="UPDATE mysql.user SET Grant_priv='Y', Super_priv='Y' WHERE User='root';"
+query4="delete from mysql.user where user='root' and host!='%';"
+query5="SET GLOBAL time_zone ='+03:00';"
+mysql -u root -e "$query2" -e "$query" -e "$query4" -e "$query3" -e "$query5"
+mv /etc/localtime /etc/localtime-old
+ln -s /usr/share/zoneinfo/Europe/Moscow /etc/localtime
+tail -F -n0 /etc/hosts

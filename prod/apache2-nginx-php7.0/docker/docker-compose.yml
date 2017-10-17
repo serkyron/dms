@@ -1,0 +1,29 @@
+version: "3"
+services:
+ 
+  prod_php7_web:
+    # replace username/repo:tag with your name and image details
+    image: prod_apache2-nginx-php7.0
+    volumes:
+       - ./prod/www/:/var/www/
+       - ./prod/hosts/sites-enabled-apache/:/etc/apache2/sites-enabled/
+       - ./prod/hosts/sites-enabled-nginx/:/etc/nginx/sites-enabled/
+       - ./prod/apache2-nginx-php7.0/conf/apache2.conf:/etc/apache2/apache2.conf
+       - ./prod/apache2-nginx-php7.0/conf/ports.conf:/etc/apache2/ports.conf
+       - ./prod/apache2-nginx-php7.0/conf/remoteip.conf:/etc/apache2/conf-available/remoteip.conf
+       - ./prod/apache2-nginx-php7.0/conf/php.ini:/etc/php/7.0/apache2/php.ini
+       - ./prod/apache2-nginx-php7.0/conf/nginx.conf:/etc/nginx/nginx.conf
+       - ./prod/apache2-nginx-php7.0/cron/developer-crontab/:/etc/cron.d/developer-crontab
+       - ./prod/apache2-nginx-php7.0/cron/cron.sh:/tmp/cron.sh
+       - ./prod/apache2-nginx-php7.0/cron/cron.log:/tmp/cron.log
+       - ./prod/apache2-nginx-php7.0/conf/postfix.cf:/etc/postfix/main.cf
+       - ./prod/apache2-nginx-php7.0/cron/check_apache.php:/tmp/check_apache.php
+       - ./prod/apache2-nginx-php7.0/cron/check_nginx.php:/tmp/check_nginx.php
+       - ./prod/apache2_envvars:/etc/apache2/envvars
+       - ./prod/apache2-nginx-php7.0/conf/init.d_apache2:/etc/init.d/apache2
+       - ./bin/:/usr/local/bin
+    networks:
+      - prod_webnet
+  
+networks:
+  prod_webnet:

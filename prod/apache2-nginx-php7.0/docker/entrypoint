@@ -1,0 +1,15 @@
+#!/bin/bash
+chown -R developer:developer /var/www
+chown -R root:root /etc/cron.d
+a2enmod headers
+a2enmod rewrite
+a2enmod remoteip
+a2enconf remoteip
+service apache2 start
+service nginx start
+service postfix start
+cron
+crontab /etc/cron.d/developer-crontab
+mv /etc/localtime /etc/localtime-old
+ln -s /usr/share/zoneinfo/Europe/Moscow /etc/localtime
+tail -F -n0 /etc/hosts

@@ -1,0 +1,20 @@
+version: "3"
+services:
+ 
+  demo_maria_db:
+    image: demo_maria_db
+    command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci]
+    volumes:
+      - ./demo/database/data:/var/lib/mysql
+      - ./demo/database/conf/my.cnf:/etc/mysql/my.cnf
+      - ./demo/database/conf/debian.cnf:/etc/mysql/debian.cnf
+      - ./demo/database/cron/developer-crontab/:/etc/cron.d/developer-crontab
+      - ./demo/database/cron/cron.sh:/tmp/cron.sh
+      - ./demo/database/cron/cron.log:/tmp/cron.log
+    environment:
+      MYSQL_ROOT_PASSWORD: gL*Px|0SJr5#iZtI
+    networks:
+     - demo_webnet
+  
+networks:
+  demo_webnet:

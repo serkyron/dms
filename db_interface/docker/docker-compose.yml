@@ -1,0 +1,16 @@
+version: "3"
+services:
+
+  adminer:
+    image: phpmyadmin/phpmyadmin
+    ports:
+           - "4080:80"
+    volumes:
+        - ./db_interface/conf/config.inc.php/:/etc/phpmyadmin/config.inc.php
+    networks:
+     - demo_webnet
+     - prod_webnet
+  
+networks:
+  demo_webnet:
+  prod_webnet:

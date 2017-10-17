@@ -1,0 +1,8 @@
+#!/bin/bash
+chown -R root:root /etc/cron.d
+service nginx start
+cron
+crontab /etc/cron.d/developer-crontab
+mv /etc/localtime /etc/localtime-old
+ln -s /usr/share/zoneinfo/Europe/Moscow /etc/localtime
+tail -F -n0 /etc/hosts
